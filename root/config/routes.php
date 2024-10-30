@@ -55,7 +55,17 @@ return function (RouteBuilder $routes): void {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'about']);
+
+        $builder->connect('/about', ['controller' => 'Pages', 'action' => 'display', 'about']);
+        $builder->connect('/contact', ['controller' => 'Pages', 'action' => 'display', 'contact']);
+        $builder->connect('/projects', ['controller' => 'Pages', 'action' => 'display', 'projects']);
+        $builder->connect('/getPlayerProfile', ['controller' => 'Players', 'action' => 'getPlayerProfile']);
+
+        /*$builder->connect('/getPlayerProfile/:id',
+            ['controller' => 'Players', 'action' => 'getPlayerProfile'],
+            ['pass' => ['id'], 'id' => '\d+']
+        );*/
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
@@ -77,7 +87,6 @@ return function (RouteBuilder $routes): void {
          */
         $builder->fallbacks();
     });
-
     /*
      * If you need a different set of middleware or none at all,
      * open new scope and define routes there.
