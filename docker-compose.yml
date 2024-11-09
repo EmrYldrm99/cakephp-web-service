@@ -9,17 +9,25 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
-
   web:
     image: php:8.3-apache
     volumes:
       - ./root:/var/www/html
+      - ./root/apache2.conf:/etc/apache2/apache2.conf
+      - ./root/gulpfile.js:/var/www/html/gulpfile.js
+      - ./root/package.json:/var/www/html/package.json
+      - ./root/node_modules:/var/www/html/node_modules
     ports:
       - 8080:80
     command: >
       bash -c "apt-get update && \
       apt-get install -y libicu-dev libzip-dev && \
+      apt-get install -y nodejs npm && \
+      npm install --global gulp-cli && \
+      cd /var/www/html && \
+      npm install && \
       docker-php-ext-install intl zip mysqli pdo pdo_mysql && \
+      a2enmod rewrite && \
       apache2-foreground"
     depends_on:
       - database

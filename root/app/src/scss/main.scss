@@ -1,0 +1,8 @@
+@use '_reset';
+@use '_variables';
+
+$test: darkblue;
+
+h1 {
+    background-color: $test;
+ }
