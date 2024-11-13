@@ -1,0 +1,12 @@
+@use '../settings/variables' as v;
+
+@mixin test {
+    background-color: gray;
+    font-family: fantasy;
+    border: 2px solid black;
+}
+
+@mixin deneme($border-w, $border-col) {
+    background-color: v.$primary-color;
+    border: $border-w solid $border-col;
+}

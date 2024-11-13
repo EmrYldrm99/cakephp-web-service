@@ -1,0 +1,1 @@
+<h1>Footer Partial</h1>

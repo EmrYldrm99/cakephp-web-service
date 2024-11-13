@@ -1,8 +1,4 @@
-@use '_reset';
-@use '_variables';
-
-$test: darkblue;
-
-h1 {
-    background-color: $test;
- }
+@use 'base' as base;
+@use 'settings' as *;
+@use 'pages' as pages;
+@use 'node_modules/@picocss/pico/scss/pico' as pico;

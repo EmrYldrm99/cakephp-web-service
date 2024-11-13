@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -15,7 +16,7 @@ class PlayersController extends AppController
 
     public function viewClasses(): array
     {
-      return [JsonView::class];
+        return [JsonView::class];
     }
     /**
      * Index method
@@ -30,17 +31,27 @@ class PlayersController extends AppController
         $this->set(compact('players'));
     }
 
+    public function list()
+    {
+        // Diese Methode gibt nur den HTML-Code der Spieler-Liste zurück
+        $players = $this->Players->find('all');
+        // Die Spieler an die View übergeben
+        $this->set(compact('players'));
+        // Rendern der 'list' View ohne Layout
+        $this->viewBuilder()->enableAutoLayout(false);
+    }
+
 
     public function getPlayerProfile($id = null)
     {
-      $player = $this->Players->get(1);
+        $player = $this->Players->get(1);
 
-      if(!$player) {
-        throw new NotFoundException(__('Spieler nicht gefunden'));
-      }
+        if (!$player) {
+            throw new NotFoundException(__('Spieler nicht gefunden'));
+        }
 
-      $this->set('player', $player);
-      $this->viewBuilder()->setOption('serialize', 'player');
+        $this->set('player', $player);
+        $this->viewBuilder()->setOption('serialize', 'player');
     }
 
 

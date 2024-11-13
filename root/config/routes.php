@@ -53,7 +53,7 @@ return function (RouteBuilder $routes): void {
 
     $routes->scope('/', function (RouteBuilder $builder): void {
         /*
-         * Here, we are connecting '/' (base path) to a controller called 'Pages',
+         * Here, we are connecting '/' (base path) to a controller called 'Pages',s
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */

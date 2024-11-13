@@ -1,0 +1,9 @@
+@function lol($val) {
+    @if $val == 1 {
+        @return red;
+    } @else if $val == 2 {
+        @return black;
+    } @else {
+        @return yellow;
+    }
+}

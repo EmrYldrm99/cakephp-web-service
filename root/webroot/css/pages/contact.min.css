@@ -1,0 +1,1 @@
+:root{--background-col:white;--text-color:black;--border-color:black}[theme=dark]{--background-color:black;--text-color:white;--border-color:orange}.container-page{background-color:var(--background-color);padding:10px;margin:10px;color:var(--text-color);border:2px solid var(--border-color)}li::before{content:"- "}

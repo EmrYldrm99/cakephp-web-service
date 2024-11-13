@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Core\Configure;
@@ -69,5 +71,16 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
+    }
+
+
+    public function list()
+    {
+        // Diese Methode gibt nur den HTML-Code der Spieler-Liste zurück
+        $players = "players";
+        // Die Spieler an die View übergeben
+        $this->set(compact('players'));
+        // Rendern der 'list' View ohne Layout
+        $this->viewBuilder()->enableAutoLayout(false);
     }
 }

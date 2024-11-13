@@ -45,4 +45,9 @@
         </ul>
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
+
+    <div id="bla" hx-get="<?= $this->Url->build(['action' => 'list']) ?>" hx-target="#bla" hx-trigger="load" hx-swap="outerHTML">
+        <!-- Platzhaltertext, wenn die Liste noch nicht geladen wurde -->
+        Lade Spieler...
+    </div>
 </div>
