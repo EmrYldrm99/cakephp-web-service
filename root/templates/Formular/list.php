@@ -3,13 +3,15 @@
       <?= $this->Form->control('first_name', [
           'placeholder' => 'First name',
           'autocomplete' => 'given-name',
-          'label' => 'First name'
+          'label' => 'First name',
+          'value' => $fname
       ]) ?>
       <?= $this->Form->control('email', [
           'type' => 'email',
           'placeholder' => 'Email',
           'autocomplete' => 'email',
-          'label' => 'Email'
+          'label' => 'Email',
+          'value' => $mail
       ]) ?>
     </fieldset>
   

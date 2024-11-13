@@ -30,6 +30,8 @@ use Cake\Controller\Controller;
  */
 class FormularController extends Controller
 {
+
+    private $session;
     /**
      * Initialization hook method.
      *
@@ -43,6 +45,8 @@ class FormularController extends Controller
     {
         parent::initialize();
         $this->loadComponent('Flash');
+
+        $this->session = $this->request->getSession();
     }
 
     public function index() {}
@@ -52,7 +56,11 @@ class FormularController extends Controller
     {
         //debug($this->request->getQuery('first_name'));
         $players = "players";
-        $this->set(compact('players'));
+        $this->set([
+            'players' => $players,
+            'fname' => $this->session->read("fname"),
+            'mail' => $this->session->read("mail")
+        ]);
         // Rendern der 'list' View ohne Layout
         $this->viewBuilder()->enableAutoLayout(false);
     }
@@ -67,7 +75,8 @@ class FormularController extends Controller
 
     public function lol()
     {
-        //debug($this->request->getQuery('first_name'));
+        $val = $this->session->read("test");
+        //debug($val);
         $players = "players";
         $this->set(compact('players'));
         // Rendern der 'list' View ohne Layout
@@ -78,8 +87,17 @@ class FormularController extends Controller
     {
         //debug($this->request->getQuery('first_name'));
         //debug($firstName = $this->request->getData());
-        if (strcmp($this->request->getData('first_name'), "emr6464")) {
+        /*if (strcmp($this->request->getData('first_name'), 'emr6464')  === 0) {
+            $this->session->write("test", "lol");
             return $this->redirect(['action' => 'lol']);
-        } else return $this->redirect(['action' => 'list']);
+        } else {
+            $this->session->write("test", "list");
+            return $this->redirect(['action' => 'list']);
+        }*/
+
+        $this->session->write("fname", $this->request->getData('first_name', 'unknown'));
+        $this->session->write("mail", $this->request->getData('email', 'unknown'));
+
+        return $this->redirect(['action' => 'list']);
     }
 }
