@@ -60,7 +60,6 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
         $builder->connect('/about', ['controller' => 'Pages', 'action' => 'display', 'about']);
-        $builder->connect('/contact', ['controller' => 'Pages', 'action' => 'display', 'contact']);
         $builder->connect('/projects', ['controller' => 'Pages', 'action' => 'display', 'projects']);
         $builder->connect('/getPlayerProfile', ['controller' => 'Players', 'action' => 'getPlayerProfile']);
 

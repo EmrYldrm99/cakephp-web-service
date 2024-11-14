@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -34,6 +35,11 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id, contain: []);
         $this->set(compact('user'));
+    }
+
+    public function test()
+    {
+        debug('Hello!');
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -40,6 +41,24 @@ class UsersTable extends Table
         $this->setTable('users');
         $this->setDisplayField('fname');
         $this->setPrimaryKey('id');
+
+        // Define 'hasOne' association with 'Contact' table
+        $this->hasOne('Contact', [
+            'foreignKey' => 'user_id', // Adjust to the correct foreign key column in Contact
+        ]);
+    }
+
+    public function test()
+    {
+        debug('hello');
+    }
+
+    public function getUsersWithContact()
+    {
+        return $this->find()
+            ->contain(['Contact'])  // Include associated Contact data
+            ->enableHydration(false) // Disable hydration to get a plain array
+            ->toArray();             // Convert the result to an array
     }
 
     /**

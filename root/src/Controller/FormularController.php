@@ -19,6 +19,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\ORM\TableRegistry;
+use Cake\Datasource\ModelAwareTrait;
 
 /**
  * Application Controller
@@ -47,10 +49,19 @@ class FormularController extends Controller
         $this->loadComponent('Flash');
 
         $this->session = $this->request->getSession();
+
+        $this->Users = $this->fetchTable('Users');
+        $this->Contact = $this->fetchTable('Contact');
+        $userData = $this->Users->find()
+            ->contain(['Contact']) // Includes associated Contact data
+            ->enableHydration(false)
+            ->toArray();
+        //$platoonsTable = TableRegistry::getTableLocator()->get('Users');
+        //debug($userData);
+        debug($this->Users->getUsersWithContact());
     }
 
     public function index() {}
-
 
     public function list()
     {
