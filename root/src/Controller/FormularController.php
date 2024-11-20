@@ -50,7 +50,8 @@ class FormularController extends Controller
 
         $this->session = $this->request->getSession();
 
-        $this->Users = $this->fetchTable('Users');
+        //$this->Users = $this->fetchTable('Users');
+        $this->Users = TableRegistry::getTableLocator()->get('Users');
         $this->Contact = $this->fetchTable('Contact');
         $userData = $this->Users->find()
             ->contain(['Contact']) // Includes associated Contact data
@@ -58,26 +59,96 @@ class FormularController extends Controller
             ->toArray();
         //$platoonsTable = TableRegistry::getTableLocator()->get('Users');
         //debug($userData);
-        debug($this->Users->getUsersWithContact());
+        //debug($this->Users->getUsersWithContact());
     }
 
     public function index() {}
 
     public function list()
     {
+        $this->viewBuilder()->enableAutoLayout(false);
+        //$user = $usersTable->newEmptyEntity();
+        $usersTable = TableRegistry::getTableLocator()->get('Users');
+        $user = $usersTable->newEmptyEntity();
+
+        if ($this->request->is('post')) {
+            //debug($this->request->getData());
+            // Es handelt sich um eine DELETE-Anfrage
+            $usersTable->patchEntity($user, $this->request->getData(), [
+                'validate' => 'test'
+            ]);
+
+            if ($user->hasErrors()) {
+                // Fehler behandeln
+                //debug($user->getErrors());
+                //$this->Flash->error('Es gab ein Problem mit der Eingabe.');
+            } else {
+                // Keine Fehler, speichere das Entity
+                //debug("keine Fehler!");
+                $data = $this->request->getData();
+                $this->session->write("fname", $data['fname']);
+                $this->session->write("lname", $data['lname']);
+                return $this->redirect(['action' => 'ok']);
+                /*if ($this->Users->save($user)) {
+                    $this->Flash->success('Benutzer erfolgreich gespeichert.');
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error('Beim Speichern des Benutzers ist ein Fehler aufgetreten.');
+                }*/
+            }
+            //debug("post request!");
+        } else {
+            //("get request!");
+        }
+
         //debug($this->request->getQuery('first_name'));
-        $players = "players";
         $this->set([
-            'players' => $players,
-            'fname' => $this->session->read("fname"),
-            'mail' => $this->session->read("mail")
+            'user' => $user,
+            'fname' => $this->session->read('fname', ''),
+            'lname' => $this->session->read('lname', ''),
         ]);
         // Rendern der 'list' View ohne Layout
-        $this->viewBuilder()->enableAutoLayout(false);
     }
 
     public function ok()
     {
+        $this->viewBuilder()->enableAutoLayout(false);
+        //$user = $usersTable->newEmptyEntity();
+        $usersTable = TableRegistry::getTableLocator()->get('Users');
+        $user = $usersTable->newEmptyEntity();
+
+        if ($this->request->is('post')) {
+            //debug($this->request->getData());
+            // Es handelt sich um eine DELETE-Anfrage
+            $usersTable->patchEntity($user, $this->request->getData(), [
+                'validate' => 'lol'
+            ]);
+
+            if ($user->hasErrors()) {
+                // Fehler behandeln
+                debug($user->getErrors());
+                //$this->Flash->error('Es gab ein Problem mit der Eingabe.');
+            } else {
+                // Keine Fehler, speichere das Entity
+                debug("keine Fehler!");
+                //return $this->redirect(['action' => 'ok']);
+                /*if ($this->Users->save($user)) {
+                    $this->Flash->success('Benutzer erfolgreich gespeichert.');
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error('Beim Speichern des Benutzers ist ein Fehler aufgetreten.');
+                }*/
+            }
+            debug("post request!");
+        } else {
+            ("get request!");
+        }
+
+        //debug($this->request->getQuery('first_name'));
+        $this->set([
+            'user' => $user
+        ]);
+
         $players = "players";
         $this->set(compact('players'));
         // Rendern der 'list' View ohne Layout
@@ -86,12 +157,19 @@ class FormularController extends Controller
 
     public function lol()
     {
-        $val = $this->session->read("test");
-        //debug($val);
-        $players = "players";
-        $this->set(compact('players'));
+        $page = $this->request->getData('page') ?? $this->request->getQuery('page') ?? 1;
+
+        debug($page);
+        $query = $this->Users->find();
+        //$users = $this->paginate($query);
+        $users = $this->paginate($query, [
+            'limit' => 10, // Zeigt 10 Zeilen pro Seite an
+            'page' => $page
+        ]);
+
+        $this->set(compact('users'));
+        //$this->viewBuilder()->enableAutoLayout(false);
         // Rendern der 'list' View ohne Layout
-        $this->viewBuilder()->enableAutoLayout(false);
     }
 
     public function validate()

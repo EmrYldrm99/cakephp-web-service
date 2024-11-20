@@ -61,6 +61,35 @@ class UsersTable extends Table
             ->toArray();             // Convert the result to an array
     }
 
+    public function validationTest(Validator $validator): Validator
+    {
+        //debug("validationTest called!");
+
+        $validator
+            ->scalar('fname')
+            ->maxLength('fname', 8)
+            ->notEmptyString('fname');
+
+        $validator
+            ->scalar('lname')
+            ->maxLength('lname', 8)
+            ->notEmptyString('lname');
+
+        return $validator;
+    }
+
+    public function validationLol(Validator $validator): Validator
+    {
+        debug("validationLol called!");
+
+        $validator
+            ->scalar('age')
+            ->maxLength('age', 3)
+            ->notEmptyString('age');
+
+        return $validator;
+    }
+
     /**
      * Default validation rules.
      *
