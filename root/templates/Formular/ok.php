@@ -9,7 +9,6 @@
     <!-- Submit Button with HTMX -->
     <button 
         hx-get="<?= $this->Url->build(['controller' => 'Formular', 'action' => 'list']) ?>"
-        hx-include="form"  // Include all form data
         hx-target="#bla"  // Where the response will be displayed
         hx-swap="innerHTML"
         hx-headers='{"X-CSRF-Token": "<?= $this->request->getAttribute('csrfToken') ?>"}'>
