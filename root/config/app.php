@@ -242,15 +242,22 @@ return [
      * easier. Each profile accepts a number of keys. See `Cake\Mailer\Mailer`
      * for more information.
      */
+    'EmailTransport' => [
+        'default' => [
+            'className' => 'Smtp',
+            'host' => 'smtp.office365.com',
+            'port' => 587,
+            'username' => '',
+            'password' => '',
+            'tls' => true, // TLS aktivieren, da Outlook es benötigt
+        ],
+    ],
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
-            /*
-             * Will by default be set to config value of App.encoding, if that exists otherwise to UTF-8.
-             */
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
+            'from' => ['' => ''],
+            'charset' => 'utf-8',
+            'headerCharset' => 'utf-8',
         ],
     ],
 
