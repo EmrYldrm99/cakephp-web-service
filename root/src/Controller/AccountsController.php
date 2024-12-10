@@ -20,7 +20,7 @@ class AccountsController extends AppController
     {
         $query = $this->Accounts->find()
             ->contain(['Platoons']);
-        $accounts = $this->paginate($query);
+        $accounts = $this->paginate($query, ['maxLimit' => 5]);
 
         $this->set(compact('accounts'));
     }
@@ -41,6 +41,7 @@ class AccountsController extends AppController
     public function group()
     {
         if ($this->request->is('post')) {
+            debug($this->request->getData());
             $selectedAccountIds = $this->request->getData('account_ids'); // IDs der Spieler
             $platoonName = $this->request->getData('name'); // Clanname
 

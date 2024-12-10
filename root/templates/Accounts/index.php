@@ -31,10 +31,10 @@
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $account->id], ['confirm' => __('Are you sure you want to delete # {0}?', $account->id)]) ?>
                     </td>
                     <td>
-                        <?= $this->Form->checkbox('account_ids[]', [
-                            'value' => $account->id,
-                            'hiddenField' => false,
-                        ]) ?>
+                        <input type="checkbox" 
+                               class="item-checkbox" 
+                               data-id="<?= $account->id ?>" 
+                               <?= isset($selectedItems[$account->id]) ? 'checked' : '' ?>>
                     </td>
                 </tr>
                 <?php endforeach; ?>
